@@ -1,0 +1,5 @@
+wheel
+flask
+sqlalchemy
+mysql-connector-python
+passlib

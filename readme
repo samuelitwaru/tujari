@@ -1,0 +1,31 @@
+**I deleted all the database including all the file uploads to reduce file size on sending.**
+
+================================== MY WORK LOG ===================================
+
+1. Worked on the details interface in the following parts:
+    - "Add to Cart", "Add to Whishlist" and "Rate Product" buttons  (responsivenes)
+    - "You may also like these products" and "Products viewed recently" (Horizontal scroll)
+
+2. Worked on the cart table. I made it smaller with 'table-sm' and placed a min-width on the product's quantity selector input because the quatity could not be seen when the screen becomes smaller.
+
+3. Worked on the account interfaces for customer and vendor. However couldnt 
+accomplish functionality due to some database faults below.
+
+
+=========================== ACCOUNTS FUNCTIONALITY CODE =======================
+* I have placed the "account" functionality routes in /Application/routes/customer/account.py where i added a new blueprint (just to ease my coding process) called account. So you can get rid of this blueprint and combine the routes in it in the customer blueprint.
+
+* I did the same for account functionality of vendors
+
+========================= DATABASE CORRECTIONS (SO FAR) ========================
+* there is no relationship between Customer and CustomerAddress table. It should be there
+* there is duplicated data between the Customer and CustomerAddress tabe. For example; email, even the customer's name appears in both tables.
+
+======================================= HINTS ==================================
+* Keeping the field names of the Models and Forms helps to ease work and accuracy especially when making update functionality.
+* I would recommend flask_sqlachemy instead of SQLachemy (can be considered later since changing maybe disasterous)
+
+========================================= GOOD =================================
+* I love the macros in "helpers.html".. Makes work alot easier
+
+
