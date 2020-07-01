@@ -1,0 +1,115 @@
+{% extends 'vendor/base-vendor.html'%}
+{%from 'vendor/helper.html' import vendor_section%}
+{% block body%}
+<div id="all">
+  <div id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- breadcrumb-->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li aria-current="page" class="breadcrumb-item active">My Account</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-3">
+          <!--
+          *** CUSTOMER MENU ***
+          _________________________________________________________
+          -->
+         {{vendor_section(page='sales')}}
+    
+          <!-- /.col-lg-3-->
+          <!-- *** CUSTOMER MENU END ***-->
+        </div>
+        <div id="" class="col-lg-9">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <h1>My Sales</h1>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>sale</th>
+                      <th>product name</th>
+                      <th>Date delivered</th>
+                      <th>Ammount</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th># 1735</th>
+                      <td>Teckno phone</td>
+                      <td>22/06/2013</td>
+                      <td>shs 150.00</td>
+                      <td><span class="badge badge-info">Being prepared</span></td>
+                      <td><a href="" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <th># 1735</th>
+                      <td>Teckno phone</td>
+                      <td>22/06/2013</td>
+                      <td>shs 150.00</td>
+                      <td><span class="badge badge-info">Being prepared</span></td>
+                      <td><a href="" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <th># 1735</th>
+                      <td>22/06/2013</td>
+                      <td>Teckno phone</td>
+                      <td>shs 150.00</td>
+                      <td><span class="badge badge-success">delivered</span></td>
+                      <td><a href="" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <th># 1735</th>
+                      <td>Teckno phone</td>
+                      <td>22/06/2013</td>
+                      <td>shs 150.00</td>
+                      <td><span class="badge badge-danger">Cancelled</span></td>
+                      <td><a href="" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <th># 1735</th>
+                      <td>Teckno phone</td>
+                      <td>22/06/2013</td>
+                      <td>shs 150.00</td>
+                      <td><span class="badge badge-warning">delivered</span></td>
+                      <td><a href="" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total ammount</td>
+                        <td colspan="2">50,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+              </div>
+              <div class="pages">
+                <p class="loadMore"><a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more product sales</a></p>
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                  <ul class="pagination">
+                    <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

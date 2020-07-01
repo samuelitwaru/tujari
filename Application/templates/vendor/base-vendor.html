@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Amobit e-commerce</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'vendor/bootstrap/css/bootstrap.min.css')}}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'vendor/font-awesome/css/font-awesome.min.css')}}">
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/custom.css')}}">
+    <!-- Favicon-->
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'favicon.png')}}">
+    
+  </head>
+<body>
+    <div class="container mt-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Services
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{url_for('vendors.product_upload')}}">Add Product</a>
+                    <a class="dropdown-item" href="{{ url_for('vendors.product') }}">My Products</a>
+                    <a class="dropdown-item" href="{{ url_for('vendors.track_products') }}">Tracking your products</a>
+                    <a class="dropdown-item" href="{{url_for('vendors.sales')}}">Your Sales</a>
+                  </div>
+                </li>
+              {% endif %}
+              
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+             <div>
+              {% if current_user.is_authenticated %}
+                <ul class="navbar-nav mr-3 ml-5">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownaccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-user mr-2"></i>account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownaccount">
+                        <a class="dropdown-item" href="{{ url_for('vendors.logout') }}">Sign out</a>
+                        <a class="dropdown-item" href="{{url_for('vendor_account.update_vendor')}}">Account Settings</a>
+                    </div>
+                  </li>
+                </ul>
+              {%  endif %}
+            </div>
+          </div>
+        </nav>
+        </div>
+        <div class="row" style="margin-top: 5px;">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            {% with messages = get_flashed_messages(with_categories=true)%}
+              {% if messages %}
+                {% for category,message in messages%}
+                  <div class="alert alert-{{ category}} alert-dismissible text-center">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endfor%}
+              {% endif %}
+					  {% endwith %}
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+    {% block body%}
+    {% endblock %}
+
+    <footer class="border-top border-0" style="background-color: #e0e0e0;">
+      <div class="container py-5">
+        <div class="row pt-5">
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h4 class="mb-3">Pages</h4>
+            <ul class="list-unstyled">
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Terms and conditions</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="@">Contact us</a></li>
+            </ul>
+            <hr>
+            {% if not current_user.is_authenticated %}
+              <h4 class="mb-3">User section</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                <li><a href="#">Register</a></li>
+              </ul>
+            {% endif %}
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h4 class="mb-3">Top categories</h4>
+            <h5 class="font-weight-bolder">Fashion</h5>
+            <ul class="list-unstyled">
+              <li><a href="{{ url_for('customers.category') }}">Mens Fashion</a></li>
+              <li><a href="{{ url_for('customers.category') }}">Ladies Fashion</a></li>
+              <li><a href="{{ url_for('customers.category') }}">Babys Fashion</a></li>
+              <li><a href="{{ url_for('customers.category') }}">Wedding</a></li>
+
+            </ul>
+            <h5 class="font-weight-bold">Computing</h5>
+            <ul class="list-unstyled">
+              <li><a href="{{ url_for('customers.category') }}">Laptops</a></li>
+              <li><a href="{{ url_for('customers.category') }}">Phones</a></li>
+              <li><a href="{{ url_for('customers.category') }}">Computer Accessories</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h4 class="mb-3">Where to find us</h4>
+            <p><strong>Amobit Tech Ltd.</strong><br>Euata Trading Center<br>New Heaven<br>45Y 73J<br>Arua<br><strong>Uganda</strong></p>
+            <hr class="d-block d-md-none">
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h4 class="mb-3">Get the news</h4>
+            <form>
+              <div class="input-group">
+                <input type="text" class="form-control"><span class="input-group-append">
+                  <button type="button" class="btn btn-outline-primary">Subscribe!</button></span>
+              </div>
+            </form>
+            <hr>
+            <h4 class="mb-3">Stay in touch</h4>
+            <p>
+              <a href="#" class="facebook external">
+                <i class="fa fa-facebook"></i>
+              </a>
+              <a href="#" class="twitter external">
+                <i class="fa fa-twitter"></i>
+              </a>
+              <a href="#" class="instagram external">
+                <i class="fa fa-instagram"></i>
+              </a>
+              <a href="#" class="gplus external">
+                <i class="fa fa-google-plus"></i>
+              </a><a href="#" class="email external">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </p>
+          </div>
+          <!-- /.col-lg-3-->
+        </div>
+      </div>
+      <div class="bg-dark">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <p class="text-center text-white mb-0">©2020 Amobit Technologies</p>
+            </div>
+  
+      </div>
+      </div>
+      </div>
+    </footer>
+
+    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+</body>
+</html>

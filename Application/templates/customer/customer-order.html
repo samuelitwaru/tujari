@@ -1,0 +1,106 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import sidebar%}
+{% block body%}
+<div id="all">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item"><a href="#">My orders</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Order # 1735</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-3">
+            <!--
+            *** CUSTOMER MENU ***
+            _________________________________________________________
+            -->
+            
+              {{sidebar(page='order')}}
+            <!-- /.col-lg-3-->
+            <!-- *** CUSTOMER MENU END ***-->
+          </div>
+          <div id="customer-order" class="col-lg-9">
+            <div class="box">
+              <h1>Order #1735</h1>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <b>Date:</b> 12/06/2019
+                </div>
+                <div class="col-md-6 col-sm-6 justify-content-end">
+                  <b>Status:</b> Being prepared
+                </div>
+              </div>
+              <hr>
+              <div class="table-responsive mb-4">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th colspan="2">Product</th>
+                      <th>Quantity</th>
+                      <th>Unit price</th>
+                      <th>Discount</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="#"><img src="{{url_for('static', filename='images/detailsquare.jpg')}}" alt="White Blouse Armani"></a></td>
+                      <td><a href="#">White Blouse Armani</a></td>
+                      <td>2</td>
+                      <td>shs123.00</td>
+                      <td>shs0.00</td>
+                      <td>shs246.00</td>
+                    </tr>
+                    <tr>
+                      <td><a href="#"><img src="{{url_for('static', filename='images/basketsquare.jpg')}}" alt="Black Blouse Armani"></a></td>
+                      <td><a href="#">Black Blouse Armani</a></td>
+                      <td>1</td>
+                      <td>shs200.00</td>
+                      <td>shs0.00</td>
+                      <td>shs 200.00</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="5" class="text-right">Order subtotal</th>
+                      <th>shs 446.00</th>
+                    </tr>
+                    <tr>
+                      <th colspan="5" class="text-right">Shipping and handling</th>
+                      <th>shs 10.00</th>
+                    </tr>
+                    <tr>
+                      <th colspan="5" class="text-right">Tax</th>
+                      <th>shs 0.00</th>
+                    </tr>
+                    <tr>
+                      <th colspan="5" class="text-right">Total</th>
+                      <th>shs 456.00</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.table-responsive-->
+              <div class="row addresses">
+                <div class="col-lg-6">
+                  <h2>Invoice address</h2>
+                  <p>John Brown<br>13/25 New Avenue<br>New Heaven<br>45Y 73J<br>England<br>Great Britain</p>
+                </div>
+                <div class="col-lg-6">
+                  <h2>Shipping address</h2>
+                  <p>John Brown<br>13/25 New Avenue<br>New Heaven<br>45Y 73J<br>England<br>Great Britain</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}

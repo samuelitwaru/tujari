@@ -1,0 +1,208 @@
+{%macro render_product(id,name,key_features, front_p, back_p, price, quantity, d_price, brand, promo_price, current_user)%}
+<div class="p-1">
+	<div class="product card shadow-sm mb-3" style="max-width:13.5rem; min-width: 13.5rem">
+    <div class="card-body pt-0 pb-2">
+      <div class="flip-container card-img-top">
+        <div class="flipper">
+          <div class="front"><img src="{{url_for ('static',filename='vendor_product_pictures/' + front_p ) }}" alt="" class="img-fluid img-thumbnail border-0"></a></div>
+          <div class="back"><img src="{{url_for ('static',filename='vendor_product_pictures/' + back_p ) }}" alt="" class="img-fluid img-thumbnail border-0"></a></div>
+        </div>
+      </div>
+      <a href="{{ url_for('customers.product_details', id=id) }}" class="invisible card-img-top"><img src="{{url_for ('static',filename='vendor_product_pictures/' +  front_p ) }}" alt="" class="img-fluid"></a>
+      <h6 class="card-title mt-2 mb-1 text-center" style="font-size: 1rem;">
+          <b>{{ name }}</b>
+      </h6>
+      <div class="text-center" style="font-size: 1.1rem;">
+      {% if promo_price %}
+        <p class="card-text mb-1"> 
+          <del style="font-size: small;" class="text-danger">Shs {{ price }}</del>
+          <sup>  
+            <span class="badge text-success">-{{ ((price-promo_price)/price * 100)|round }}%</span>
+          </sup>
+        </p>
+        <p class="card-text mb-2">
+          <b>Shs{{promo_price}}</b>
+        </p>
+      {% else %}
+        <p class="card-text mb-0">
+          Shs {{ price }}
+        </p>
+      {% endif %}
+      
+      </div>
+      
+    </div>
+    {% if current_user.is_authenticated %}
+      <div class=" card-footer border-0 pt-0 mt-0 text-center bg-white">
+        <a href="{{ url_for('customers.product_details', id=id) }}" class="btn btn-sm btn-primary mt-1 stretched-link "><i class="fa fa-list-alt mr-1"></i>view details</a>
+      </div>
+    {% endif %}
+    <div class="card-footer py-2">
+      <small class="text-muted">
+      Brand: {{brand}}
+      </small>
+    </div>
+  </div>
+</div>
+{%endmacro%}
+
+{%macro sidebar(page)%}
+
+	<div class="card sidebar-menu">
+      <div class="card-header">
+        <h3 class="h4 card-title">Customer section</h3>
+      </div>
+      <div class="card-body">
+        <ul class="nav nav-pills flex-column">
+        	<a href="{{ url_for('customers.orders') }}" class="nav-link {% if page=='order'%}active{%endif%}"><i class="fa fa-list"></i> My orders</a>
+        	<a href="{{ url_for('customers.logout') }}" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a>
+        </ul>
+      </div>
+    </div>
+
+{%endmacro%}
+
+
+{% macro renderformfield(field) %}
+	<div class='form-group'>
+		<b>{{field.label.text}}</b>
+	{%if field.errors%}
+		{{field(class="form-control is-invalid", **kwargs)|safe}}
+		<div class="invalid-feedback">
+			{%for error in field.errors%}
+				{{error}}
+			{%endfor%}
+		</div>
+	{%else%}
+		{{field(class="form-control", **kwargs)|safe}}
+	{%endif%} 
+	</div>
+	
+{%endmacro%}
+
+{% macro renderradiofield(field) %}
+
+	<div class="w-100">
+    <b>{{field.label.text}}</b>
+  </div>
+  {%for subfield in field%}
+		<div class="radio">
+			<label>
+				{{subfield}}
+				{{subfield.label.text}}
+			</label>
+		</div>
+		{%if field.errors%}
+			<div class="text-danger">
+				{%for error in field.errors%}
+					{{error}}
+				{%endfor%}
+			</div>
+		{%endif%}
+	{%endfor%}
+
+{%endmacro%}
+
+{%macro renderfilefield(field)%}
+
+  <div class="form-group"> 
+    <b>{{field.label()}} <small> (supported files formats are: PNG, PDF and JPG)</small></b>
+    {{field(class="form-control-file")}}
+    {%if field.errors%}
+      {%for error in errors%}
+        <span class="text-danger">{{error}}</span><br>
+      {%endfor%}
+    {%endif%}
+  </div>
+
+{%endmacro%}
+
+
+
+{%macro checkout(page)%}
+
+	 <div class="nav flex-column flex-md-row nav-pills text-center">
+	 	<a href="{{url_for('customers.checkout1')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='address'%}active{%else%}disabled{%endif%}"> 
+	 		<i class="fa fa-map-marker"></i>
+	 		Address
+	 	</a>
+	 	<a href="#" class="nav-link flex-sm-fill text-sm-center {% if page=='delivery'%}active{%else%}disabled{%endif%}"> 
+	 		<i class="fa fa-truck"></i>
+	 		Delivery Method
+	 	</a>
+	 	<a href="#" class="nav-link flex-sm-fill text-sm-center {% if page=='order'%}active{%else%}disabled{%endif%}"> 
+	 		<i class="fa fa-eye"></i>
+	 		Order Review
+	 	</a>
+	 	<a href="#" class="nav-link flex-sm-fill text-sm-center {% if page=='pay'%}active{%else%}disabled{%endif%}"> 
+	 		<i class="fa fa-money"></i>
+	 		Payement Method
+	 	</a>
+	 </div>
+
+{%endmacro%}
+
+
+{%macro checkout1()%}
+
+	<div id="order-summary" class="card">
+      <div class="card-header">
+        <h3 class="mt-4 mb-4">Order summary</h3>
+      </div>
+      <div class="card-body">
+        <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Order subtotal</td>
+                <th>shs446,000</th>
+              </tr>
+              <tr>
+                <td>Shipping and handling</td>
+                <th>shs10,000</th>
+              </tr>
+              <tr>
+                <td>Tax</td>
+                <th>shs0.00</th>
+              </tr>
+              <tr class="total">
+                <td>Total</td>
+                <th>shs456,000</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+{%endmacro%}
+
+
+{%macro breadnav(page)%}
+
+	<nav aria-label="breadcrumb" class="mt-5">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('customers.home')}}">Home</a></li>
+        <li aria-current="page" class="breadcrumb-item active">{{page}}</li>
+      </ol>
+    </nav>
+
+{%endmacro%}
+
+{%macro reg_nav(page)%}
+  {%if page=="login"%}
+    <div class="nav flex-column flex-sm-row nav-pills">
+      <a href="{{url_for('vendors.login')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='login'%}active{%endif%}"> <i class="fa fa-user"></i>Login as Customer</a>
+    </div>
+  {%else%}
+    <div class="nav flex-column flex-sm-row nav-pills">
+      <a href="{{url_for('vendors.register')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='account'%}active{%endif%}"> <i class="fa fa-user"></i>Seller Account</a>
+      <a href="{{url_for('vendors.register1')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='bus'%}active{%endif%}"> <i class="fa fa-truck"></i>Business Information</a>
+      <a href="{{url_for('vendors.register2')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='pay'%}active{%endif%}"> <i class="fa fa-money"></i>Payment Details</a>
+      <a href="{{url_for('vendors.summary')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='summary'%}active{%endif%}"> <i class="fa fa-list"></i>summary</a>
+    </div>
+  {%endif%}
+{%endmacro%}
+
+

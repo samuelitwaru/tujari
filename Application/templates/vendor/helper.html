@@ -1,0 +1,173 @@
+
+{%macro render_product(id ,name,key_features, front_p, back_p, price, quantity, d_price, brand, promo_price)%}
+<div class="product card shadow-sm mb-3" style="width:12rem">
+  <div class="card-body pt-0 pb-3">
+    <div class="flip-container card-img-top">
+      <div class="flipper">
+        <div class="front"><img src="{{url_for ('static',filename='vendor_product_pictures/' + front_p ) }}" alt="" class="img-fluid img-thumbnail border-0"></a></div>
+        <div class="back"><img src="{{url_for ('static',filename='vendor_product_pictures/' + back_p ) }}" alt="" class="img-fluid img-thumbnail border-0"></a></div>
+      </div>
+    </div>
+    <a href="{{ url_for('vendors.product_details', id=id) }}" class="invisible card-img-top"><img src="{{url_for ('static',filename='vendor_product_pictures/' +  front_p ) }}" alt="" class="img-fluid"></a>
+    <h6 class="card-title mt-2 mb-1 text-center" style="font-size: 1rem;">
+        <b>{{ name }}</b>
+    </h6>
+    <div class="text-center" style="font-size: 1.1rem;">
+    {% if promo_price %}
+      <p class="card-text mb-1"> 
+        <del style="font-size: small;" class="text-danger">Shs {{ price }}</del>
+        <sup>  
+          <span class="badge text-success">-{{ ((price-promo_price)/price * 100)|round }}%</span>
+        </sup>
+      </p>
+      <p class="card-text mb-2">
+        <b>Shs{{promo_price}}</b>
+      </p>
+    {% else %}
+      <p class="card-text mb-0">
+        Shs {{ price }}
+      </p>
+    {% endif %}
+    <a href="{{ url_for('vendors.product_details', id=id) }}" class="btn btn-sm btn-primary mt-2 stretched-link" type="submit">
+      <i class="fa fa-detail"></i>View Details
+    </a>
+    </div>
+    
+  </div>
+  <div class="ribbon sale">
+    <div class="theribbon"><span class="badge">{{quantity}}</span></div>
+    <div class="ribbon-background"></div>
+  </div>
+  <div class="card-footer py-2">
+    <small class="text-muted">
+    Brand: {{brand}}
+    </small>
+  </div>
+</div>
+{%endmacro%}  
+
+{%macro vendor_section(page)%}
+
+	<div class="card sidebar-menu">
+      <div class="card-header">
+        <h3 class="h4 card-title">Vendor section</h3>
+      </div>
+      <div class="card-body">
+        <ul class="nav nav-pills flex-column">
+        	<a href="{{url_for('vendors.sales')}}" class="nav-link {% if page=='sales'%}active{%endif%}"><i class="fa fa-list"></i> My Sales</a>
+        	<a href="{{url_for('vendors.product')}}" class="nav-link {% if page=='products'%}active{%endif%}"><i class="fa fa-heart"></i> My products</a>
+        	<a href="" class="nav-link {% if page=='account'%}active{%endif%}"><i class="fa fa-user "></i> My account</a>
+        	<a href="" class="nav-link {% if page=='logou'%}active{%endif%}"><i class="fa fa-sign-out"></i> Logout</a>
+        </ul>
+      </div>
+    </div>
+
+{%endmacro%}
+{%macro reg_nav(page)%}
+  {%if page=="login"%}
+    <div class="nav flex-column flex-sm-row nav-pills">
+      <a href="{{url_for('vendors.login')}}" class="nav-link flex-sm-fill text-sm-center {% if page=='login'%}active{%endif%}"> <i class="fa fa-user"></i>Login as Vendor</a>
+    </div>
+  {%else%}
+    <div class="nav flex-column flex-sm-row nav-pills">
+      <a href="#" class="nav-link flex-sm-fill text-sm-center {% if page=='account'%}active{%endif%}"> <i class="fa fa-user mr-2"></i>Seller Account</a>
+      <a href="#" class="nav-link flex-sm-fill text-sm-center {% if page=='bus'%}active{%endif%}"> <i class="fa fa-truck mr-2"></i>Business Information</a>
+      <a href="#" class="nav-link flex-sm-fill text-sm-center {% if page=='summary'%}active{%endif%}"> <i class="fa fa-list mr-2"></i>summary</a>
+    </div>
+  {%endif%}
+{%endmacro%}
+
+{%macro sidebar()%}
+
+	<div class="card sidebar-menu">
+      <div class="card-header">
+        <h3 class="h4 card-title">Customer section</h3>
+      </div>
+      <div class="card-body">
+        <ul class="nav nav-pills flex-column"><a href="customer-orders.html" class="nav-link active"><i class="fa fa-list"></i> My orders</a><a href="customer-wishlist.html" class="nav-link"><i class="fa fa-heart"></i> My wishlist</a><a href="customer-account.html" class="nav-link"><i class="fa fa-user"></i> My account</a><a href="index.html" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a></ul>
+      </div>
+    </div>
+
+{%endmacro%}
+
+
+{% macro renderformfield(field) %}
+	<div class='form-group'>
+		<b>{{field.label.text}}</b>
+	{%if field.errors%}
+		{{field(class="form-control is-invalid", **kwargs)|safe}}
+		<div class="invalid-feedback">
+			{%for error in field.errors%}
+				{{error}}
+			{%endfor%}
+		</div>
+	{%else%}
+		{{field(class="form-control", **kwargs)|safe}}
+	{%endif%} 
+	</div>
+	
+{%endmacro%}
+
+{%macro renderfilefield(field)%}
+
+  <div class="form-group"> 
+    <b>{{field.label()}} <small> (supported files formats are: PNG, PDF and JPG)</small></b>
+    {{field(class="form-control-file")}}
+    {%if field.errors%}
+      {%for error in errors%}
+        <span class="text-danger">{{error}}</span><br>
+      {%endfor%}
+    {%endif%}
+  </div>
+
+{%endmacro%}
+
+
+{% macro renderradiofield(field) %}
+
+	<b>{{field.label.text}}</b>
+	{%for subfield in field%}
+		<div class="radio">
+			<label>
+				{{subfield}}
+				{{subfield.label.text}}
+			</label>
+		</div>
+		{%if field.errors%}
+			<div class="text-danger">
+				{%for error in field.errors%}
+					{{error}}
+				{%endfor%}
+			</div>
+		{%endif%}
+	{%endfor%}
+
+{%endmacro%}
+
+{% macro renderbolfield(field) %}
+
+    <div class="radio">
+      <label>
+        {{field}}
+        <b>{{field.label.text}}</b>
+      </label>
+    </div>
+
+{%endmacro%}
+
+
+{%macro breadnav(page)%}
+
+	<nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('customers.home')}}">Home</a></li>
+        <li aria-current="page" class="breadcrumb-item active">{{page}}</li>
+      </ol>
+    </nav>
+
+{%endmacro%}
+
+
+
+
+

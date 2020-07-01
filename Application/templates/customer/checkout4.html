@@ -1,0 +1,75 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import checkout, checkout1, breadnav%}
+{% block body%}
+<div id="all">
+  <div id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- breadcrumb-->
+          {{breadnav(page='Checkout - Order review')}}
+        </div>
+        <div class="row">
+          <div id="checkout" class="col-lg-9">
+            <div class="box">
+              <form method="POST" action="{{url_for('customers.checkout4')}}">
+                <h1> Checkout - Order review</h1>
+                {{checkout(page='order')}}
+                <div class="content">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th colspan="2">Product</th>
+                          <th>Quantity</th>
+                          <th>Unit price</th>
+                          <th>Discount</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><a href="#"><img src="{{url_for ('static', filename='images/detailsquare.jpg') }}" alt="White Blouse Armani"></a></td>
+                          <td><a href="#">White Blouse Armani</a></td>
+                          <td>2</td>
+                          <td>shs123,000</td>
+                          <td>shs0.00</td>
+                          <td>shs246,000</td>
+                        </tr>
+                        <tr>
+                          <td><a href="#"><img src="{{url_for ('static', filename='images/detailsquare.jpg')}}" alt="Black Blouse Armani"></a></td>
+                          <td><a href="#">Black Blouse Armani</a></td>
+                          <td>1</td>
+                          <td>shs200,000</td>
+                          <td>shs0.00</td>
+                          <td>shs200,000</td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th colspan="5">Total</th>
+                          <th>shs446,000</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                  <!-- /.table-responsive-->
+                </div>
+                <!-- /.content-->
+                <div class="box-footer d-flex justify-content-between"><a href="{{url_for('customers.checkout3')}}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to payment method</a>
+                  <button type="submit" class="btn btn-primary">Place an order<i class="fa fa-chevron-right"></i></button>
+                </div>
+              </form>
+            </div>
+            <!-- /.box-->
+          </div>
+          <!-- /.col-lg-9-->
+          <div class="col-lg-3">
+            {{checkout1()}}
+          </div>
+        <!-- /.col-lg-3-->
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

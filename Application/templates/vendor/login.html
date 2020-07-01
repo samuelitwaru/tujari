@@ -1,0 +1,29 @@
+{% extends 'vendor/base-vendor.html'%}
+{%from 'vendor/helper.html' import renderformfield, reg_nav%}
+{% block body%}
+<div id="all">
+    <div id="content" class="container" style="padding-top: 2%; padding-left: 20%; padding-right: 20%;">
+        <div class=" box mt-3">
+             <div>
+                 {{reg_nav(page='login')}}
+             </div>
+            <div class="mt-4" style="padding-left: 30%;">
+                <form method="POST" action="{{url_for('vendors.login')}}">
+                    {{form.hidden_tag()}}
+                    <div class="row col-lg-12">
+                        {{renderformfield(form.email)}}
+                    </div>
+                    <div class="row col-lg-12">
+                        {{renderformfield(form.password)}}
+                    </div>
+                     <div class="row col-lg-12">
+                        {{form.submit(class='btn btn-primary')}}
+                    </div>
+                </form>                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

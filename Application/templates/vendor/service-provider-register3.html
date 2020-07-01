@@ -1,0 +1,63 @@
+{% extends 'vendor/base-vendor.html'%}
+{%from 'vendor/helper.html' import renderformfield, renderfilefield, reg_nav%}
+{% block body%}
+<div id="all" class="bg-light">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Payment method</li>
+              </ol>
+            </nav>
+          </div>
+          <div id="checkout" class="col-lg-12">
+            <div class="card rounded-0">
+              <div class="card-body">
+                <form method="POST" action="">
+                  <h1>Register-Payement Details</h1>
+                  <h4>Give us your convinience method of receiving your payement</h4>
+                  {{reg_nav(page='pay')}}
+                  <div class="content py-3">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="box payment-method">
+                          <h4>Mobile money</h4>
+                          <p>provide your mobile money number.</p>
+                          <div class="box-footer text-center">
+                            <input type="radio" name="payment" value="payment1">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="box payment-method">
+                          <h4>VISA and Mastercard only.</h4>
+                          <p>Provide details of your bank account</p>
+                          <div class="box-footer text-center">
+                            <input type="radio" name="payment" value="payment2">
+                          </div>
+                        </div>
+                      </div>
+                   
+                    </div>
+                    <!-- /.row-->
+                  </div>
+                  <!-- /.content-->
+                  <div class="d-flex justify-content-between"><a href="{{url_for('vendors.register1')}}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to Business Information</a>
+                    <button type="submit" class="btn btn-primary">Continue<i class="fa fa-chevron-right"></i></button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.box-->
+            </div>
+          </div>
+          <!-- /.col-lg-9-->
+          
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}

@@ -1,0 +1,65 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import checkout, checkout1, breadnav%}
+{% block body%}
+<div id="all">
+  <div id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- breadcrumb-->
+          {{breadnav(page='Checkout - Payment method')}}
+        </div>
+        <div id="checkout" class="col-lg-9">
+          <div class="box">
+            <form method="POST" action="{{url_for('customers.checkout4')}}">
+              <h1>Checkout - Payment method</h1>
+              {{checkout(page='pay')}}
+              <div class="content py-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="box payment-method">
+                      <h4>Mobile money</h4>
+                      <p>We like it all.</p>
+                      <div class="box-footer text-center">
+                        <input type="radio" name="payment" value="payment1">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="box payment-method">
+                      <h4>VISA and Mastercard only.</h4>
+                      <div class="box-footer text-center">
+                        <input type="radio" name="payment" value="payment2">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="box payment-method">
+                      <h4>Cash on delivery</h4>
+                      <p>You pay when you get it.</p>
+                      <div class="box-footer text-center">
+                        <input type="radio" name="payment" value="payment3">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.row-->
+              </div>
+              <!-- /.content-->
+              <div class="box-footer d-flex justify-content-between"><a href="{{url_for('customers.checkout2')}}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to Shipping Method</a>
+                <button type="submit" class="btn btn-primary">Continue to Order Review<i class="fa fa-chevron-right"></i></button>
+              </div>
+            </form>
+            <!-- /.box-->
+          </div>
+        </div>
+        <!-- /.col-lg-9-->
+        <div class="col-lg-3">
+          {{checkout1()}}
+        </div>
+        <!-- /.col-lg-3-->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

@@ -1,0 +1,259 @@
+{% extends 'vendor/base-vendor.html'%}
+{%from 'vendor/helper.html' import renderformfield%}
+{% block body%}
+<div id="all" class="bg-light">
+  <div id="content">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-lg-12">
+          <!-- breadcrumb-->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li aria-current="page" class="breadcrumb-item active"><strong>Product:</strong> {{ product.product.name }}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      
+      <div class="container row" >
+        <div class="col-md-4"> 
+          <div class="card rounded-0">
+            <img src="{{url_for ('static',filename='vendor_product_pictures/' + product.front_picture ) }}" alt="" class="card-img-top img-fluid">
+            <!-- <figcaption class="text-center">Listing view image</figcaption> -->
+          </div>
+        
+      
+          <!-- /.ribbon-->
+          <div class="ribbon new">
+            <div class="theribbon"><span class="badge">{{ product.quantity }}</span></div>
+            <div class="ribbon-background"></div>
+          </div>
+          <!-- /.ribbon-->
+        </div>
+        <div class="col-md-1">
+          <!-- just to create space btn the two top most boxes-->
+        </div>
+        <div class="col-md-7 card rounded-0" style="padding-left:5%; ">
+          <div class="card-body">
+            <div class="w-100">
+              <h5 class=""><span class="font-weight-bold">Name of product:</span> {{ product.product.name }}</h5>
+              <h5 class=""><span class="font-weight-bold">price of product:</span> shs {{ product.prize }}</h5>
+              <h5 class=""><span class="font-weight-bold">Quantity of product:</span> {{ product.quantity }} pieces</h5>
+              {% if product.promotional_price %}
+                <h5 class=""><span class="font-weight-bold">Promotional Price:</span> shs {{ product.promotional_price }}</h5>
+              {% endif %}
+            </div>
+            <br><!--some space-->
+            <div class="row no-gutters" style="width: 10rem;">
+              <div class="col-md-6">
+                <figure class="figure">
+                  <img src="{{url_for ('static',filename='vendor_product_pictures/' + product.front_picture ) }}" alt="" class="figure-img img-fluid img-thumbnail">
+                  <figcaption class="figure-caption">front image</figcaption>
+                </figure>
+              </div>
+              <div class="col-md-6">
+                <figure class="figure">
+                  <img src="{{url_for ('static',filename='vendor_product_pictures/' + product.back_picture ) }}" alt="" class="figure-img img-fluid img-thumbnail">
+                  <figcaption class="figure-caption">Back image</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-primary" data-toggle="modal" data-target="#addstock">Add quantity</button>
+              <button class="btn btn-info" data-toggle="modal" data-target="#prom">Promotion</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#deleteproduct">Delete</button>
+            </div>
+            <hr>
+            <div class="row">
+              <h4>Product Ratings</h4>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="container row mt-3">
+        <div class=" col-md-8">
+          <div class="card rounded-0">
+            <div class="card-body">
+              <div id="details">
+                <h2>Key Features</h2>
+                <p>
+                  {% set key_features = product.key_features.split(",") %}
+                  <ul>
+                    {% for key_feature in key_features %}
+                      <li>{{ key_feature }}</li>
+                    {% endfor %}
+                  </ul>
+                </p>
+                <hr><!--just a horizontal line btn them-->
+                <h2>Product Description</h2>
+                <h4>Product details</h4>
+                <p>
+                  {% set desc = product.description.split(",") %}
+                  <ul>
+                    {% for des in desc %}
+                      <li>{{ des }}</li>
+                    {% endfor %}
+                  </ul>
+                </p>
+                <hr>
+                <div class="social">
+                  <h4>Share it to your friends on social media</h4>
+                  <p>
+                    <a href="#" class="external facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a>
+                    <a href="#" class="external twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="email"><i class="fa fa-envelope"></i></a>
+                  </p>
+                </div>
+                </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-end">
+            <a href="{{ url_for('vendors.edit_product', id=product.prod_details_id) }}" class="btn btn-primary">Edit Product</a>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <!-- just to create space btn the two middle boxes-->
+        </div>
+        <div class="col-md-3">
+          <div class="card rounded-0">
+            <div class="card-header">
+              <a href="" class="btn">
+                <b> Seller Information</b>
+                <i class="fa fa-chevron-right"></i>
+              </a>
+            </div>
+            <div class="card-body">
+
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+      <!--end of second upper section and begin somment section-->
+      <div id="productMain" class="container my-4">
+        <h3>Comment Section</h3>
+        {%if comments%}
+          {%for comment in comments%}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card rounded-0">
+                  <div class="card-header">
+                    <img src="" class="img-fluid img-rounded">
+                    <p class="float-right">Posted: </p>
+                  </div>
+                  <div class="card-body">
+                    <div class="text-center">
+                      comment here
+                    </div>
+                    <div>
+                      <a href="" class="float-right">
+                        <i class="fa fa-reply"></i>
+                          Reply
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          {%endfor%}
+        {%else%}
+          <div class="row">
+              <div class="col-md-12">
+                <div class="card rounded-0">
+                  <div class="card-header">
+                    <i class="fa fa-user"></i> Tayebwa Ian
+                    <p class="float-right">Posted: 2 days ago</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="text-muted">
+                      No comments available yet
+                    </div>
+                    <div>
+                      <a href="" class="float-right">
+                        <i class="fa fa-reply"></i>
+                          Reply
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {%endif%}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addstock" tabindex="-1" role="dialog" aria-labelledby="stockmodal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="stockmodal"><b>Add more stock of this Product</b></h5>
+         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('vendors.add_stock', id=product.prod_details_id) }}">
+          {{form.hidden_tag()}}
+          <div>
+            {{renderformfield(form.quantity)}}
+          </div>
+          <div class="float-right">
+            {{form.submit(class='btn btn-primary')}}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="prom" tabindex="-1" role="dialog" aria-labelledby="prommodal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="prommodal"><b>Set Promotional Price</b></h5>
+         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('vendors.set_promo_price', id=product.prod_details_id) }}">
+          {{form.hidden_tag()}}
+          <div>
+            {{renderformfield(form.price)}}
+          </div>
+          <div class="float-right">
+            {{form.submit(class='btn btn-primary')}}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteproduct" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModal"><b>Are sure you want to delete this product?</b></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted text-center text-info">This product will be removed from your listing if you click delete</p>
+        </div>
+        <div class="modal-footer">
+          <form method="GET" action="{{ url_for('vendors.delete_product', id=product.product.product_id) }}">
+            <button type="submit" class="btn btn-primary">Ok</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endblock%}

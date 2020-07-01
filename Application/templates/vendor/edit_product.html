@@ -1,0 +1,106 @@
+{% extends 'vendor/base-vendor.html'%}
+{%from 'vendor/helper.html' import renderformfield, renderfilefield%}
+{% block body%}
+<div id="all" class="bg-light">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Products</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Edit Product details</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <div class="container">
+          <div class="card justify-content-center">
+            <div class="card-body">
+              <form method="POST" action="{{ url_for('vendors.edit_product', id=id) }}" enctype="multipart/form-data" style="padding-right: 10%; padding-left: 10%;">
+                {{form.hidden_tag()}}
+                  <h3 class="text-center">
+                    <b>Edit information on this Product</b>
+                  </h3>
+                  <hr>
+                  <div class="content py-3">
+                    <div class="col-md-12">
+                      {{renderformfield(form.category)}}
+                    </div>
+                    <div class="col-md-12">
+                     {{renderformfield(form.sub_category)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.name)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.brand)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.product_type)}}
+                    </div>
+                    <hr>
+                    <div class="content-center">
+                      <h4><b class="text-center">Product Details Section</b></h4>
+                    </div>
+                    <hr>
+                    
+                    <div class="col-md-12">
+                        {{renderformfield(form.size)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.color)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.weight)}}
+                    </div>
+                  
+                    <div class="col-md-12">
+                        {{renderformfield(form.key_features)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.description)}}
+                    </div>
+                 
+                    <div class="col-md-12">
+                        {{renderformfield(form.prize)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.warranty)}}
+                    </div>
+                    <div class="col-md-12">
+                        {{renderformfield(form.guarantee)}}
+                    </div>
+                    <hr>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6">
+                        <figure class="figure">
+                          <img src="{{url_for ('static',filename='vendor_product_pictures/' + front_pic ) }}" alt="" class="img-fluid figure-img">
+                        </figure>
+                        {{renderfilefield(form.front_pic)}}
+                      </div>
+                      <div class="col-md-6 col-sm-6">
+                        <figure class="figure">
+                          <img src="{{url_for ('static',filename='vendor_product_pictures/' + back_pic ) }}" alt="" class="img-fluid figure-img">
+                        </figure>
+                        {{renderfilefield(form.back_pic)}}
+                      </div>
+                    </div>
+                    <br>
+                    <hr>
+                   <div class="text-center">
+                     {{form.submit(class='btn btn-lg btn-primary')}}
+                   </div>
+                </form>
+            </div>
+            
+          </div>
+          <!-- /.box-->
+        </div>
+        
+      </div>
+    </div>
+</div>
+{% endblock%}

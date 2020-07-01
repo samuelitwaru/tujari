@@ -1,0 +1,239 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import render_product, renderformfield, renderradiofield %}
+{% block body%}
+<div id="all" class="bg-light">
+  <div id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- breadcrumb-->
+          <nav aria-label="breadcrumb" class="mt-5">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ url_for('customers.home') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">{{ category }}</a></li>
+              <li class="breadcrumb-item"><a href="#">{{ sub_category }}</a></li>
+              <li aria-current="page" class="breadcrumb-item active">{{ pdt.name }}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-sm-12"> 
+          <img src="{{url_for('static', filename= 'vendor_product_pictures/' + pdt.front_picture )}}" alt="" class="img-fluid img-thumbnail border-0 shadow-sm">
+          <!-- /.ribbon-->
+          <div class="ribbon new">
+            <div class="theribbon"><span class="badge">{{ pdt.quantity }}</span></div>
+            <div class="ribbon-background"></div>
+          </div>
+          <!-- /.ribbon-->
+        </div>
+        
+        <div class="col-md-6 py-4 px-5 shadow-sm border rounded-0 bg-white">
+          <div>
+            <h3>{{ pdt.name }}</h3>
+
+            <div>
+              <label><b>Brand:</b></label>  
+              <label>{{ pdt.brand }}</label>
+            </div>
+            {% if pdt.promotional_price %}
+              <p class="mt-3"> 
+                <del style="font-size: small;" class="text-danger">Shs {{ pdt.prize }}</del>
+              </p>
+              <p>
+                <b>Shs {{ pdt.promotional_price }}</b>
+                <sup>
+                  <span class="badge text-success">-{{ ((pdt.prize-pdt.promotional_price)/pdt.prize * 100)|round }}%</span>
+                </sup>
+              </p>
+            {% else %}
+              <div>
+                <label><b>Price:</b></label>  
+                <label>Shs {{ pdt.prize }}</label>
+              </div>
+            {% endif %}
+          </div>
+          <hr><!--some space-->
+          <div class="row">
+            <div class="col-md-4 p-1">
+              <button class="btn btn-block btn-sm btn-primary h-100" data-toggle="modal" data-target="#addtocart"><i class="fa fa-shopping-cart"></i>
+                Add to Cart
+              </button>
+            </div>
+
+            <div class="col-md-4 p-1">
+              <a class="btn btn-block btn-sm btn-primary text-white h-100"><i class="fa fa-heart"></i>
+              Add to WishList
+              </a>
+            </div>
+
+            <div class="col-md-4 p-1">
+              <a class="btn btn-block btn-sm btn-primary text-white h-100"><i class="fa fa-star"></i>
+                Rate product
+              </a>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <h4>Product Ratings</h4>
+          </div>
+        </div>
+
+        <div class="col-md-3"> 
+          <img src="{{url_for('static', filename= 'vendor_product_pictures/' + pdt.back_picture)}}" alt="" class="img-fluid img-thumbnail float-right border-0 shadow-sm">
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class=" col-md-12 card px-4 py-4 rounded-0">
+          <h4>Key Features</h4>
+          {% set key_features = pdt.key_features.split(',') %}
+          <ul>
+            {% for key_feature in key_features %}
+              <li>{{ key_feature }}</li>
+            {% endfor %}
+          </ul>
+          <h4>Product Details</h4>
+          {% set descriptions = pdt.description.split(',') %}
+          <ul>
+            {% for des in descriptions %}
+              <li>{{ des }}</li>
+            {% endfor %}
+          </ul>
+          <hr>
+          <div class="social">
+            <h4>Show it to your friends</h4>
+            <p>
+              <a href="#" class="external facebook">
+                <i class="fa fa-facebook"></i>
+              </a>
+              <a href="#" class="external gplus">
+                <i class="fa fa-google-plus"></i>
+              </a>
+              <a href="#" class="external twitter">
+                <i class="fa fa-twitter"></i>
+              </a>
+              <a href="#" class="email">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </p>
+          </div>
+        </div>
+ 
+
+      </div>
+
+      <div class="container my-4">
+        <p class="h3">Comment Section<p/>
+        {%if comments%}
+          {%for comment in comments%}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card rounded-0">
+                  <div class="card-header">
+                    <img src="" class="img-fluid img-rounded">
+                    <p class="float-right">Posted: </p>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      comment here
+                    </p>
+                    <div >
+                      <a href="" class="float-right">
+                        <i class="fa fa-reply"></i>
+                          Reply
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%endfor%}
+        {%else%}
+          <div class="row">
+              <div class=" col-md-12">
+                <div class=" card rounded-0">
+                  <div class="card-header">
+                    <i class="fa fa-user"></i> None
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text text-muted">
+                      No comments available yet
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {%endif%}
+      </div>
+
+      <div class="container">
+        <div>
+          <h3>You may also like these products</h3>
+        </div>
+      </div>
+      <div class="d-flex flex-row flex-nowrap align-items-stretch px-3" style="overflow-x: auto;">
+        {% for pdt in you_may_like %}
+            {{ render_product(pdt.prod_details_id,pdt.product.name,pdt.description,pdt.front_picture,pdt.back_picture,pdt.prize,pdt.quantity,pdt.prize,pdt.brand,pdt.promotional_price, current_user) }}
+        {% endfor %}
+      </div>
+
+      <div class="container">
+        <div>
+          <h3 style="margin-top: 5px;">Products viewed recently</h3>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row flex-nowrap align-items-stretch px-3" style="overflow-x: auto;">
+        {% for pdt in recently_viewed %}
+            {{ render_product(pdt["prod_details_id"],pdt["product"]["name"],pdt["description"],pdt["front_picture"],pdt["back_picture"],pdt["prize"],pdt["quantity"],pdt["prize"],pdt["brand"],pdt["promotional_price"], current_user) }}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addtocart" tabindex="-1" role="dialog" aria-labelledby="addtocartModal" aria-hidden="true" style="font-family: 'Times New Roman', Times, serif;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addtocartModal">Specify Your Requirements before you add to Cart</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <form method="POST" action="{{ url_for('customers.product_details', id=pdt.prod_details_id) }}">
+         {{ form.hidden_tag() }}
+         <div class="d-none d-sm-none"> 
+          {{renderformfield(form.product_name)}}   
+        </div>
+          <div class="d-none d-sm-none">
+            {{renderformfield(form.product_image)}}   
+          </div>
+         <div>
+           {{renderformfield(form.quantity)}}   
+         </div>
+         <div class="d-none d-sm-none">
+          {{renderformfield(form.unit_price)}}   
+        </div>
+         <div style="display: flex;flex-flow: row wrap;">
+          
+         </div>
+         <div style="display: flex;flex-flow: row wrap;">
+          
+         </div>
+         <div style="display: flex;flex-flow: row wrap;">
+          
+         </div> 
+         <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          {{form.submit(class='btn btn-primary')}}
+        </div>
+       </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

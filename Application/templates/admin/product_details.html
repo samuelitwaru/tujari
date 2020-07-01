@@ -1,0 +1,10 @@
+{% extends 'admin/model/list.html' %}
+
+{% macro render_front_picture(model, column) %}
+    <a href="{{ url_for('vendors.getfile', file_name=model.front_picture)}}" target="_blank">view</a>
+    <a href="{{ url_for('vendors.downloadfile', file_name=model.front_picture)}}" target="_blank">download</a>
+{% endmacro %}
+{% macro render_back_picture(model, column) %}
+    <a href="{{ url_for('vendors.getfile', file_name=model.back_picture)}}" target="_blank">view</a>
+    <a href="{{ url_for('vendors.downloadfile', file_name=model.back_picture)}}" target="_blank">download</a>
+{% endmacro %}

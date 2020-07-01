@@ -1,0 +1,110 @@
+{% extends 'vendor/base-vendor.html'%}
+{% from 'vendor/helper.html' import reg_nav%}
+{% block body %}
+    <div id="all" class="bg-light">
+        <div id="content" class="container">
+            <div class=" card mt-3 rounded-0">
+                <div class="card-body">
+                    {{reg_nav(page='summary')}}
+                    <div class="mt-4">
+                        <form method="POST">
+                            <h3 class="text-left">Personal Information</h3>
+                            <div class="form-group row">
+                                <label for="vendorNames" class="col-sm-2 col-form-label">Your names</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="vendorNames" value="{{ vendor_details['full_names'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="Username" class="col-sm-2 col-form-label">Username</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="Username" value="{{ vendor_details['user_name'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="email" value="{{ vendor_details['email'] }}">
+                                </div>
+                            </div>  
+                            <div class="form-group row">
+                                <label for="address" class="col-sm-2 col-form-label">Address</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="address" value="{{ vendor_details['address'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="personalContact" class="col-sm-2 col-form-label">Personal Contact</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="personalContact" value="{{ vendor_details['contact'] }}">
+                                </div>
+                            </div> 
+                            <hr>
+                            <h3 class="text-left">Business Information</h3>
+                            <div class="form-group row">
+                                <label for="companyName" class="col-sm-2 col-form-label">Company Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="companyName" value="{{ vendor_details['company_name'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="shopName" class="col-sm-2 col-form-label">Shop Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="shopName" value="{{ vendor_details['shop_name'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="location" class="col-sm-2 col-form-label">Location</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="location" value="{{ vendor_details['location'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="description" value="{{ vendor_details['description'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="tinNumber" class="col-sm-2 col-form-label">Tin Number</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="tinNumber" value="{{ vendor_details['tin_number'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="licenseNumber" class="col-sm-2 col-form-label">License Number</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="licenseNumber" value="{{ vendor_details['license_number'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="bizContact" class="col-sm-2 col-form-label">Business Contact</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="bizContact" value="{{ vendor_details['second_contact'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="documents" class="col-sm-2 col-form-label">Documents</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="documents" value="{{ vendor_details['other_files'] }}">
+                                </div>
+                            </div> 
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="check" value="accepted" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                I agree to this information as my own
+                                </label>
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">Submit Information</button>
+                        </form>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{url_for('vendors.register1')}}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to Business Information</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

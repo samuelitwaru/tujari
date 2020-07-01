@@ -1,0 +1,83 @@
+{% extends 'vendor/base-vendor.html'%}
+{%from 'vendor/helper.html' import renderformfield, renderfilefield, reg_nav%}
+{% block body%}
+<div id="all" class="bg-light">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Business information</li>
+              </ol>
+            </nav>
+          </div>
+          <div id="checkout" class="col-lg-12">
+            <div class="card rounded-0">
+              <div class="card-body">
+                <form method="POST" action="" enctype="multipart/form-data">
+                  {{form.hidden_tag()}}
+                    <h1>Business Information</h1>
+                    {{reg_nav(page='bus')}}
+                    <div class="content py-3">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                          {{renderformfield(form.company_name)}}
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                          {{renderformfield(form.shop_name)}}
+                        </div>
+                      </div>
+                      <!--endrow-->
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                          {{renderformfield(form.location)}}
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                          {{renderformfield(form.description)}}
+                        </div>
+                      </div>
+    
+                      <div class="row">
+                         <div class="col-md-4 col-lg-4">
+                          {{renderformfield(form.contact)}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                          {{renderformfield(form.tin_number)}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                          {{renderformfield(form.license_number)}}
+                        </div>
+                      </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12">
+                            <div>
+                              <em>
+                                <b>Note: </b>
+                                (Upload a pdf file of your Legal documents and a signed agreement form)
+                              </em>
+                              <hr>
+                            </div>
+                            {{renderfilefield(form.other_files)}}
+                          </div>
+                        </div>
+                    <div class="box-footer d-flex justify-content-between"><a href="{{url_for('vendors.register')}}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back</a>
+                      {{form.submit(class='btn btn-primary')}}
+                    </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.box-->
+          </div>
+          <!-- /.col-md-9-->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+   
+    

@@ -1,0 +1,82 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import renderformfield, renderfilefield, breadnav%}
+{% block body%}
+<div id="all" class="bg-light">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            {{breadnav(page="Registration")}}
+          </div>
+          <div class="col-lg-12">
+            <div class="card rounded-0">
+              <div class="card-body">
+                <form method="POST" action="{{url_for('customers.register')}}" enctype="multipart/form-data">
+                  {{form.hidden_tag()}}
+                  <h1>Sign-Up</h1>
+                  <div class="content py-3">
+                    <div class="row">
+                      <div class="col-md-6">
+                       {{renderformfield(form.firstname)}}
+                      </div>
+                      <div class="col-md-6">
+                        {{renderformfield(form.lastname)}}
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        {{renderformfield(form.username)}}
+                      </div>
+                      <div class="col-md-6">
+                       {{renderformfield(form.email)}}
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-6 col-lg-4">
+                       {{renderformfield(form.tel)}}
+                      </div>
+                      <div class="col-md-6 col-lg-4">
+                        {{renderformfield(form.countries)}}
+                      </div>
+                      <div class="col-md-6 col-lg-4">
+                        {{renderformfield(form.district)}}
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-12">
+                        {{ renderfilefield(form.profile_picture) }}
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        {{renderformfield(form.password)}}
+                      </div>
+                      <div class="col-md-6">
+                       {{renderformfield(form.confirm_password)}}
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                  </div>
+                  <div class="float-right">
+                    {{form.submit(class='btn btn-primary')}}
+                  </div>
+                </form>
+              </div>
+              
+              <div class="card-footer d-flex justify-content-between">
+                  <p class="text-muted">Do you already have an account please click here to <a href="{{ url_for('customers.login') }}">sign-in</a></p>
+              </div>
+            </div>
+            <!-- /.box-->
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

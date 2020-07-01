@@ -1,0 +1,65 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import checkout, checkout1, breadnav%}
+{% block body%}
+<div id="all">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            {{breadnav(page='Checkout - Delivery method')}}
+            </nav>
+          </div>
+          <div id="checkout" class="col-lg-9">
+            <div class="box">
+              <form method="POST" action="{{url_for('customers.checkout3')}}">
+                <h1>Checkout - Delivery method</h1>
+                {{checkout(page='delivery')}}
+                <div class="content py-3">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="box shipping-method">
+                        <h4>USPS Next Day</h4>
+                        <p>Get it right on next day - fastest option possible.</p>
+                        <div class="box-footer text-center">
+                          <input type="radio" name="delivery" value="delivery1">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="box shipping-method">
+                        <h4>USPS Next Day</h4>
+                        <p>Get it right on next day - fastest option possible.</p>
+                        <div class="box-footer text-center">
+                          <input type="radio" name="delivery" value="delivery2">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="box shipping-method">
+                        <h4>USPS Next Day</h4>
+                        <p>Get it right on next day - fastest option possible.</p>
+                        <div class="box-footer text-center">
+                          <input type="radio" name="delivery" value="delivery3">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-footer d-flex justify-content-between"><a href="{{url_for('customers.checkout1')}}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to address</a>
+                  <button type="submit" class="btn btn-primary">Continue to Payment Method<i class="fa fa-chevron-right"></i></button>
+                </div>
+              </form>
+            </div>
+            <!-- /.box-->
+          </div>
+          <!-- /.col-md-9-->
+          <div class="col-md-3">
+            {{checkout1()}}
+          </div>
+          <!-- /.col-md-3-->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}

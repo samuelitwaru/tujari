@@ -1,0 +1,75 @@
+{% extends 'customer/base.html'%}
+{%from 'customer/helper.html' import renderformfield, checkout, checkout1, breadnav%}
+{% block body%}
+<div id="all">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            {{breadnav(page="Checkout - Address")}}
+          </div>
+          <div id="checkout" class="col-lg-9">
+            <div class="box">
+              <form method="POST" action="{{url_for('customers.checkout1')}}">
+            
+                <h1>Checkout - Address</h1>
+                {{checkout(page='address')}}
+                <div class="content py-3">
+                  <div class="row">
+                    <div class="col-md-6">
+                     {{renderformfield(form.firstname)}}
+                    </div>
+                    <div class="col-md-6">
+                      {{renderformfield(form.lastname)}}
+                    </div>
+                  </div>
+                  <!-- /.row-->
+                  <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                     {{renderformfield(form.country)}}
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                      {{renderformfield(form.zipcode)}}
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                      {{renderformfield(form.state)}}
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                      {{renderformfield(form.street)}}
+                    </div>
+                    <div class="col-md-6">
+                      {{renderformfield(form.tel)}}
+                    </div>
+                    <div class="col-md-6">
+                      {{renderformfield(form.email)}}
+                    </div>
+                  </div>
+                  <!-- /.row-->
+                </div>
+                <div class="float-right m-2">
+                  {{form.submit(class='btn btn-primary')}}
+                </div>
+              </form>
+              <div class="box-footer d-flex justify-content-between">
+                <a href="{{url_for('customers.basket')}}" class="btn btn-outline-secondary">
+                  <i class="fa fa-chevron-left"></i>Back
+                </a>
+                <a href="{{url_for('customers.checkout2')}}" class="btn btn-primary">
+                  Continue to Delivery Method
+                  <i class="fa fa-chevron-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- /.box-->
+          </div>
+          <!-- /.col-lg-9-->
+          <div class="col-lg-3">
+            {{checkout1()}}
+          </div>
+          <!-- /.col-lg-3-->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

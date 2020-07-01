@@ -1,0 +1,5 @@
+{% extends 'admin/model/list.html' %}
+
+{% macro render_image(model, column) %}
+    <a href="{{ url_for('vendors.getfile', file_name=model.image_name)}}" target="_blank">view</a>
+{% endmacro %}
