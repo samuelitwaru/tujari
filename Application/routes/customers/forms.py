@@ -82,6 +82,7 @@ class UpdatePasswordForm(FlaskForm):
 	repeat = PasswordField('Repeat Password', validators=[ InputRequired(), Length(min=3, max=30), EqualTo('new')])
 	submit=SubmitField('Update')
 
-	def validate_current(field, form):
-		if field.data != current_user.password:
+	def validate_current(form, field):
+		customer = current_user
+		if not customer.verify_password(field.data):
 			raise ValidationError('Incorrect current password.')

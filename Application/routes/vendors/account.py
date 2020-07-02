@@ -24,9 +24,9 @@ def update_vendor():
         vendor.address = form.address.data
         vendor.email = form.email.data
         vendor.contact = form.contact.data
-
         session.commit()
-    return render_template('vendor/account.html', form=form, password_form=password_form, business_form=business_form, profile_form=profile_form, file_form=file_form)
+    tab = 'personal'
+    return render_template('vendor/account.html', form=form, password_form=password_form, business_form=business_form, profile_form=profile_form, file_form=file_form, current_tab=tab)
 
 
 @vendor_account.route('/update-profile-picture', methods=["POST", "GET"])
@@ -54,19 +54,24 @@ def update_profile_picture():
 @login_required
 def update_vendor_business():
     vendor = current_user
-    form = UpdateVendorBusinessForm(obj=vendor)
+    form = UpdateVendorForm(obj=vendor)
+    password_form = UpdatePasswordForm()
+    business_form = UpdateVendorBusinessForm(obj=vendor)
+    profile_form = UpdateVendorImageForm(obj=vendor)
+    file_form = UpdateVendorFileForm(obj=vendor)
 
-    if form.validate_on_submit():
+    if business_form.validate_on_submit():
         # update account details
-        vendor.shop_name = form.shop_name.data
-        vendor.company_name = form.company_name.data
-        vendor.location = form.location.data
-        vendor.description = form.description.data
-        vendor.tin_number = form.tin_number.data
-        vendor.license_number = form.license_number.data
-        
+        vendor.shop_name = business_form.shop_name.data
+        vendor.company_name = business_form.company_name.data
+        vendor.location = business_form.location.data
+        vendor.description = business_form.description.data
+        vendor.tin_number = business_form.tin_number.data
+        vendor.license_number = business_form.license_number.data
         session.commit()
-    return redirect(url_for('vendor_account.update_vendor'))
+        return redirect(url_for('vendor_account.update_vendor_business'))
+    tab = 'business'
+    return render_template('vendor/account.html', form=form, password_form=password_form, business_form=business_form, profile_form=profile_form, file_form=file_form, current_tab=tab)
 
 
 
@@ -74,9 +79,14 @@ def update_vendor_business():
 @login_required
 def update_vendor_file():
 	vendor = current_user
-	form = UpdateVendorFileForm(obj=vendor)
-	if form.validate_on_submit():
-		new_doc = form.additional_file_names.data
+	form = UpdateVendorForm(obj=vendor)
+	password_form = UpdatePasswordForm()
+	business_form = UpdateVendorBusinessForm(obj=vendor)
+	profile_form = UpdateVendorImageForm(obj=vendor)
+	file_form = UpdateVendorFileForm(obj=vendor)
+
+	if file_form.validate_on_submit():
+		new_doc = file_form.additional_file_names.data
 
 		# delete current doc
 		current_path = app.config.get('BASE_DIR') + url_for('static', filename=f'vendor_documents/{vendor.additional_file_names}')
@@ -87,14 +97,33 @@ def update_vendor_file():
 		# update doc
 		doc_name = save_document(new_doc)
 		vendor.additional_file_names = doc_name
-		print(">>>>>>>>>>>>>>>>>>>>", vendor.additional_file_names)
 		session.commit()
-	return redirect(url_for('vendor_account.update_vendor'))
+		return redirect(url_for('vendor_account.update_vendor_file'))
+	tab = 'business'
+	return render_template('vendor/account.html', form=form, password_form=password_form, business_form=business_form, profile_form=profile_form, file_form=file_form, current_tab=tab)
 
 
 @vendor_account.route('/read-vendor-file')
 @login_required
 def read_vendor_file():
 	vendor = current_user
-	print(">>>>>>>>>>>>>>>>>>>>", vendor.additional_file_names)
 	return send_file(app.config.get('BASE_DIR') + url_for('static', filename=f'vendor_documents/{vendor.additional_file_names}'))
+
+
+
+@vendor_account.route('/update-vendor-password', methods=["POST", "GET"])
+@login_required
+def update_password():
+	vendor = current_user
+	form = UpdateVendorForm(obj=vendor)
+	password_form = UpdatePasswordForm()
+	business_form = UpdateVendorBusinessForm(obj=vendor)
+	profile_form = UpdateVendorImageForm(obj=vendor)
+	file_form = UpdateVendorFileForm(obj=vendor)
+	if password_form.validate_on_submit():
+		vendor.hash_password(password_form.new.data)
+		session.commit()
+		flash('Updated password.')
+		return redirect(url_for('vendor_account.update_password'))
+	tab = 'password'
+	return render_template('vendor/account.html', form=form, password_form=password_form, business_form=business_form, profile_form=profile_form, file_form=file_form, current_tab=tab)

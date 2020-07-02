@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Length, Optional, InputRequired, Va
 from wtforms.fields.html5 import DateField
 from flask_wtf.file import FileField, FileAllowed
 from Application.database.model import Category, SubCategory, Brand,session
+from flask_login import current_user
 
 
 class RegistrationForm(FlaskForm):
@@ -102,8 +103,9 @@ class UpdatePasswordForm(FlaskForm):
 	repeat = PasswordField('Repeat Password', validators=[ InputRequired(), Length(min=3, max=30), EqualTo('new')])
 	submit=SubmitField('Update')
 
-	def validate_current(field, form):
-		if field.data != current_user.password:
+	def validate_current(form, field):
+		vendor = current_user
+		if not vendor.verify_password(field.data):
 			raise ValidationError('Incorrect current password.')
 
 
